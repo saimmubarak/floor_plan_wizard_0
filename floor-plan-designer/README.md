@@ -1,46 +1,151 @@
-# Getting Started with Create React App
+# Floor Plan Designer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based web application for creating floor plans with AI-powered plant symbol placement. This application mimics AutoCAD functionality for drawing floor plans and integrates with YOLO models for automatic plant symbol detection and placement.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+### 🏗️ Drawing Capabilities
+- **Interactive Canvas**: Draw lines and rectangles with mouse interaction
+- **Multiple Drawing Phases**: Boundary, building, wall, pathway, and driveway phases with different colors
+- **Real-time Measurements**: Automatic calculation and display of dimensions in feet
+- **Zoom and Pan**: Full zoom and pan functionality for detailed work
+- **Object Selection**: Click to select and drag objects around the canvas
 
-### `npm start`
+### 📐 Precise Scaling
+- **AutoCAD-Compatible Scaling**: Based on 3.1:1 plot scale and 300 DPI
+- **Accurate Measurements**: 1 foot = ~31.2 pixels on screen
+- **A2 Sheet Format**: Floor plans are designed for A2 sheet export
+- **Consistent Coordinates**: Maintains coordinate consistency between canvas and AI processing
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 🏠 Predefined Shapes
+- **Plot Sizes**: 1 Kanal (50×90ft), 10 Marla (35×65ft), 5 Marla (25×45ft), Custom
+- **House Shapes**: L-shaped, Mirror L-shaped, Rectangular, U-shaped, Custom
+- **Smart Placeholders**: Predefined shapes that can be resized and repositioned
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 🤖 AI Integration
+- **YOLO CSV Import**: Import plant symbol data from YOLO model predictions
+- **Translucent Overlays**: Plant symbols appear as translucent circles on the floor plan
+- **Coordinate Mapping**: Accurate placement based on A2 sheet coordinates
+- **Category Support**: Different plant categories with confidence scores
 
-### `npm test`
+### 📤 Export Options
+- **PNG Export**: High-resolution PNG images for AI processing
+- **PDF Export**: Professional PDF blueprints in A2 format
+- **JSON Export**: Complete floor plan data for further processing
+- **CSV Export**: Plant symbol data for YOLO model training
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technical Specifications
 
-### `npm run build`
+### Scaling System
+```
+AutoCAD Settings:
+- Plot Scale: 3.1:1
+- DPI: 300
+- Units: Decimal feet
+- 1 foot = 0.3226 inches on paper
+- 1 foot = ~31.2 pixels on screen
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Drawing Phases
+- **Boundary**: Dark blue (#0000FF) - Property boundaries
+- **Building**: Brick red (#B22222) - House structures
+- **Wall**: Dark blue (#000080) - Interior walls
+- **Pathway**: Grey (#808080) - Walkways
+- **Driveway**: Grey (#808080) - Vehicle access
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### File Formats
+- **Input**: CSV files with YOLO detection data
+- **Output**: PNG, PDF, JSON, CSV formats
+- **Coordinates**: A2 sheet coordinate system (420mm × 594mm)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Getting Started
 
-### `npm run eject`
+### Prerequisites
+- Node.js 16+ 
+- npm or yarn
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Installation
+```bash
+# Clone the repository
+git clone <repository-url>
+cd floor-plan-designer
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Install dependencies
+npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# Start development server
+npm start
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Usage
 
-## Learn More
+1. **Step 1 - Plot Size**: Select your property size or choose custom
+2. **Step 2 - House Shape**: Choose a predefined house shape or draw custom
+3. **Step 3 - Design**: Add walls, pathways, and other features
+4. **AI Integration**: Import YOLO CSV data to place plant symbols
+5. **Export**: Generate PNG/PDF for AI processing or final blueprints
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### CSV Format for YOLO Integration
+```csv
+x,y,category,confidence,width,height
+100,200,Tree,0.95,10,10
+300,150,Shrub,0.87,5,5
+500,300,Flower,0.92,3,3
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Architecture
+
+### Components
+- **Canvas**: Main drawing surface with Konva.js
+- **Wizard**: Step-by-step interface for floor plan creation
+- **ShapePlaceholders**: Predefined shape generation
+- **CSVIntegration**: YOLO data import and processing
+- **ExportControls**: File export functionality
+
+### Key Technologies
+- **React 18**: UI framework
+- **TypeScript**: Type safety
+- **Konva.js**: 2D canvas rendering
+- **Styled Components**: CSS-in-JS styling
+- **html2canvas**: Canvas to image conversion
+- **jsPDF**: PDF generation
+
+## Development
+
+### Project Structure
+```
+src/
+├── components/          # React components
+│   ├── Canvas.tsx      # Main drawing canvas
+│   ├── Wizard.tsx      # Step-by-step interface
+│   ├── ShapePlaceholders.tsx
+│   ├── CSVIntegration.tsx
+│   └── ExportControls.tsx
+├── types/              # TypeScript type definitions
+├── utils/              # Utility functions
+│   └── scaling.ts      # Coordinate conversion
+└── App.tsx             # Main application
+```
+
+### Building for Production
+```bash
+npm run build
+```
+
+The build artifacts will be stored in the `build/` directory.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
+
+## Support
+
+For questions or issues, please open an issue on the GitHub repository.

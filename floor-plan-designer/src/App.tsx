@@ -45,7 +45,7 @@ function App() {
   const [selectedPlotSize, setSelectedPlotSize] = useState<PlotSize | null>(null);
   const [selectedHouseShape, setSelectedHouseShape] = useState<HouseShape | null>(null);
   
-  const canvasRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null!);
   const canvasWidth = 1200;
   const canvasHeight = 800;
 
