@@ -75,7 +75,7 @@ const Status = styled.div<{ type: 'success' | 'error' | 'info' }>`
 `;
 
 interface ExportControlsProps {
-  canvasRef: React.RefObject<HTMLDivElement>;
+  canvasRef: React.RefObject<HTMLDivElement | null>;
   objects: DrawingObject[];
   canvasWidth: number;
   canvasHeight: number;
