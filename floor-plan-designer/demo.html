@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floor Plan Designer Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .feature-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .feature-card h3 {
+            color: #3498db;
+            margin-top: 0;
+        }
+        .demo-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        .demo-button:hover {
+            background: #2980b9;
+        }
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .highlight {
+            background: #f39c12;
+            color: white;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>🏗️ Floor Plan Designer</h1>
+        <p style="text-align: center; font-size: 18px; color: #7f8c8d;">
+            A React-based web application for creating floor plans with AI-powered plant symbol placement
+        </p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>🎨 Drawing Tools</h3>
+                <ul>
+                    <li>Interactive canvas with mouse drawing</li>
+                    <li>Lines and rectangles with real-time measurements</li>
+                    <li>Multiple drawing phases (boundary, building, walls)</li>
+                    <li>Zoom and pan functionality</li>
+                    <li>Object selection and dragging</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>📐 Precise Scaling</h3>
+                <ul>
+                    <li>AutoCAD-compatible scaling (3.1:1, 300 DPI)</li>
+                    <li>Accurate measurements in feet</li>
+                    <li>A2 sheet format support</li>
+                    <li>1 foot = ~31.2 pixels on screen</li>
+                    <li>Consistent coordinate mapping</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🏠 Predefined Shapes</h3>
+                <ul>
+                    <li>Plot sizes: 1 Kanal, 10 Marla, 5 Marla, Custom</li>
+                    <li>House shapes: L-shaped, Rectangular, U-shaped</li>
+                    <li>Smart placeholders with resizing</li>
+                    <li>Color-coded drawing phases</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🤖 AI Integration</h3>
+                <ul>
+                    <li>YOLO CSV data import</li>
+                    <li>Translucent plant symbol overlays</li>
+                    <li>Coordinate-based placement</li>
+                    <li>Category and confidence support</li>
+                    <li>Real-time symbol updates</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>📤 Export Options</h3>
+                <ul>
+                    <li>High-resolution PNG export</li>
+                    <li>Professional PDF blueprints</li>
+                    <li>JSON data export</li>
+                    <li>CSV plant symbol export</li>
+                    <li>A2 format compatibility</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>⚡ Technical Features</h3>
+                <ul>
+                    <li>React 18 with TypeScript</li>
+                    <li>Konva.js for 2D rendering</li>
+                    <li>Styled Components for UI</li>
+                    <li>Responsive design</li>
+                    <li>Production-ready build</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="demo-button" onclick="showCSVExample()">📄 View CSV Example</button>
+            <button class="demo-button" onclick="showScalingInfo()">📐 Scaling Information</button>
+            <button class="demo-button" onclick="showUsageSteps()">🚀 Usage Steps</button>
+        </div>
+
+        <div id="demo-content" style="margin-top: 20px;"></div>
+
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: #ecf0f1; border-radius: 8px;">
+            <h3>Ready to Start?</h3>
+            <p>Run <span class="highlight">npm start</span> to launch the application!</p>
+            <div class="code-block">
+                cd floor-plan-designer<br>
+                npm install<br>
+                npm start
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showCSVExample() {
+            document.getElementById('demo-content').innerHTML = `
+                <h3>📄 YOLO CSV Format Example</h3>
+                <p>Import plant symbol data from YOLO model predictions:</p>
+                <div class="code-block">
+x,y,category,confidence,width,height<br>
+100,200,Tree,0.95,10,10<br>
+300,150,Shrub,0.87,5,5<br>
+500,300,Flower,0.92,3,3<br>
+200,400,Tree,0.89,12,12<br>
+400,500,Shrub,0.78,6,6
+                </div>
+                <p><strong>Columns:</strong></p>
+                <ul>
+                    <li><strong>x, y:</strong> A2 sheet coordinates in pixels</li>
+                    <li><strong>category:</strong> Plant type (Tree, Shrub, Flower, etc.)</li>
+                    <li><strong>confidence:</strong> Detection confidence (0.0 - 1.0)</li>
+                    <li><strong>width, height:</strong> Symbol dimensions in pixels</li>
+                </ul>
+            `;
+        }
+
+        function showScalingInfo() {
+            document.getElementById('demo-content').innerHTML = `
+                <h3>📐 AutoCAD-Compatible Scaling</h3>
+                <p>Precise scaling system matching AutoCAD settings:</p>
+                <div class="code-block">
+AutoCAD Settings:<br>
+- Plot Scale: 3.1:1<br>
+- DPI: 300<br>
+- Units: Decimal feet<br>
+- 1 foot = 0.3226 inches on paper<br>
+- 1 foot = ~31.2 pixels on screen<br>
+<br>
+Formula: pixels_per_foot = (DPI / plot_scale) * inches_per_foot<br>
+Calculation: (300 / 3.1) * 0.3226 ≈ 31.2 pixels/foot
+                </div>
+                <p><strong>Benefits:</strong></p>
+                <ul>
+                    <li>Consistent with professional CAD software</li>
+                    <li>Accurate measurements for construction</li>
+                    <li>Proper scaling for AI model processing</li>
+                    <li>A2 sheet format compatibility</li>
+                </ul>
+            `;
+        }
+
+        function showUsageSteps() {
+            document.getElementById('demo-content').innerHTML = `
+                <h3>🚀 How to Use the Application</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0;">
+                    <div style="border: 2px solid #3498db; border-radius: 8px; padding: 15px; text-align: center;">
+                        <h4 style="color: #3498db; margin-top: 0;">Step 1: Plot Size</h4>
+                        <p>Select your property size from predefined options or choose custom to draw your own boundary.</p>
+                    </div>
+                    <div style="border: 2px solid #e74c3c; border-radius: 8px; padding: 15px; text-align: center;">
+                        <h4 style="color: #e74c3c; margin-top: 0;">Step 2: House Shape</h4>
+                        <p>Choose a predefined house shape (L-shaped, rectangular, etc.) or draw custom house layout.</p>
+                    </div>
+                    <div style="border: 2px solid #27ae60; border-radius: 8px; padding: 15px; text-align: center;">
+                        <h4 style="color: #27ae60; margin-top: 0;">Step 3: Design</h4>
+                        <p>Add walls, pathways, driveways, and other features using the drawing tools.</p>
+                    </div>
+                    <div style="border: 2px solid #f39c12; border-radius: 8px; padding: 15px; text-align: center;">
+                        <h4 style="color: #f39c12; margin-top: 0;">AI Integration</h4>
+                        <p>Import YOLO CSV data to automatically place plant symbols on your floor plan.</p>
+                    </div>
+                    <div style="border: 2px solid #9b59b6; border-radius: 8px; padding: 15px; text-align: center;">
+                        <h4 style="color: #9b59b6; margin-top: 0;">Export</h4>
+                        <p>Generate PNG/PDF files for AI processing or final blueprint printing.</p>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
